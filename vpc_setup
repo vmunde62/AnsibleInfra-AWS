@@ -1,7 +1,7 @@
 #This file contains the variables required for the vpc setup.
 
 #Vpc name
-vpcName: Vprofile-Vpc
+vpcName: "Vprofile-Vpc"
 
 #Vpc range
 vpcCidr: '10.10.0.0/16'
