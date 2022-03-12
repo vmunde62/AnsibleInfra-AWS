@@ -115,3 +115,28 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{vprofile_igw_out.gateway_id}}"
       register: vprofile_RT_out
+      
+    - name: create NAT gateway and elastic ip
+      ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        region: "{{region}}"
+        subnet_id: "{{pubsub1_out.subnet.id}}"
+        wait: yes
+        if_exist_do_not_create: yes
+      register: NATGW_out
+
+    - name: create private subnet RT
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        resource_tags:
+          Name: vprofile-PrivateRT
+        subnets:
+          - "{{privsub1_out.subnet.id}}"
+          - "{{privsub2_out.subnet.id}}"
+          - "{{privsub3_out.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{NATGW_out.nat_gateway_id}}"
+      register: PrivRT_out
