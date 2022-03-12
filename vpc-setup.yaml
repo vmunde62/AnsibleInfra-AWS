@@ -28,7 +28,7 @@
         map_public: yes
         state: "{{state}}"
         resource_tags:
-          name: vprofile-pubsub1
+          Name: vprofile-pubsub1
       register: pubsub1_out
       
     - name: Create a Public Subnet 2 in zone2
@@ -40,7 +40,7 @@
         map_public: yes
         state: "{{state}}"
         resource_tags:
-          name: vprofile-pubsub2
+          Name: vprofile-pubsub2
       register: pubsub2_out
       
     - name: Create a Public Subnet 3 in zone3
@@ -52,6 +52,7 @@
         map_public: yes
         state: "{{state}}"
         resource_tags:
-          name: vprofile-pubsub3
+          Name: vprofile-pubsub3
       register: pubsub3_out
         
+      
