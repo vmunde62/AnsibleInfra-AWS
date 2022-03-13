@@ -156,3 +156,21 @@
         - NATGW_out.nat_gateway_id
         - PrivRT_out.route_table.id
         
+    - set_facts:
+        vpcid: "{{vpcout.vpc.id}}"
+        pubsub1id: "{{pubsub1_out.subnet.id}}"
+        pubsub2id: "{{pubsub2_out.subnet.id}}"
+        pubsub3id: "{{pubsub3_out.subnet.id}}"
+        privsub1id: "{{privsub1_out.subnet.id}}"
+        privsub2id: "{{privsub2_out.subnet.id}}"
+        privsub3id: "{{privsub3_out.subnet.id}}"
+        vprofile_igwid: "{{vprofile_igw_out.gateway_id}}"
+        vprofile_RTid: "{{vprofile_RT_out.route_table.id}}"
+        NATGWid: "{{NATGW_out.nat_gateway_id}}"
+        PrivRTid: "{{PrivRT_out.route_table.id}}"
+        cacheable: yes
+        
+    - name: Storing the vpc variables in file
+      copy:
+        content: "vpcid: {{vpcout.vpc.id}}\npubsub1id: {{pubsub1_out.subnet.id}}\npubsub2id: {{pubsub2_out.subnet.id}}\npubsub3id: {{pubsub3_out.subnet.id}}\nprivsub1id: {{privsub1_out.subnet.id}}\nprivsub2id: {{privsub2_out.subnet.id}}\nprivsub3id: {{privsub3_out.subnet.id}}\nvprofile_igwid: {{vprofile_igw_out.gateway_id}}\nvprofile_RTid: {{vprofile_RT_out.route_table.id}}\nNATGWid: {{NATGW_out.nat_gateway_id}}\nPrivRTid: {{PrivRT_out.route_table.id}}"
+        dest: vars/variable_out
