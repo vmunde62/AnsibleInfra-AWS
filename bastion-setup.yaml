@@ -34,7 +34,7 @@
             from_port: 22
             to_port: 22
             cidr_ip: "{{MYIP}}"
-        rule_desc: allow port 22 from myip
+            rule_desc: allow port 22 from myip
       register: bastion_SG_out
       
     - name: creating bastion server
