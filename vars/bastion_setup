@@ -1,5 +1,0 @@
-#This file contains the variables for the bastion server.
-
-bastion_ami: ami-0e1d30f2c40c4c701
-region: us-east-1
-MYIP: 157.33.118.60/32
