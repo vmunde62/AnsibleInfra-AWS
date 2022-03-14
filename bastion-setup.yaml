@@ -18,7 +18,7 @@
       
     - name: save keypair for bation server
       copy:
-        content: "{{baston_key_out.key.private_key}}"
+        content: "{{bastion_key_out.key.private_key}}"
         dest: ./bastion_key.pem
         mode: 0600
       when: bastion_key_out.changed
