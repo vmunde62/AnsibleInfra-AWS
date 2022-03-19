@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  connections: local
+  gather_facts: False
+  tasks:
+    
+    - name: Importing the required variables
+      include_vars: vars/variable_out
+      include_vars: vars/stack_setup
+      
+    - name: Create ec2 key
+      ec2_key:
+        name: ec2_stack_key
+        region: "{{region}}"
+      register: ec2_stack_keyout
+      
+    - name: save the ec2 key in pem format
+      copy:
+        content: "{{ec2_stack_keyout.key.private_key}}"
+        dest: "./ec2_stack_key.pem"
+        mode: 0600
+      when: ec2_stack_keyout.changed
+      
+      
