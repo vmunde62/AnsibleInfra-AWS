@@ -63,6 +63,6 @@
         path: vars/variable_out
         backup: yes
         block: |
-          bastion_SGout: "{{bastion_SG_out.group_id}}"
+          bastion_SGout: {{bastion_SG_out.group_id}}
       
 
