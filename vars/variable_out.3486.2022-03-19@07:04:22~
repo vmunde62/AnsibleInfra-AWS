@@ -9,6 +9,3 @@ vprofile_igwid: igw-0a01c2f9cce687c0a
 vprofile_RTid: rtb-05de19519657c3cd5
 NATGWid: nat-083fc5740acbf12d3
 PrivRTid: rtb-0c5395d740a0f18de
-# BEGIN ANSIBLE MANAGED BLOCK
-bastion_SGout: sg-0bc504839a93145b5
-# END ANSIBLE MANAGED BLOCK
