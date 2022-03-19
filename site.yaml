@@ -1,9 +1,3 @@
 ---
-- host: localhost
-  connection: local
-  gather_facts: False
-  Tasks:
-    - name: Include the vpc yamls
-      include: bastion-setup.yaml
-      include: vpc-setup.yaml
-      
+- include_playbook: bastion-setup.yaml
+- include_playbook: vpc-setup.yaml  
