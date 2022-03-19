@@ -41,6 +41,7 @@
         description: security group for ec2-stack
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
+        purge_rules: no
         rules:
           - proto: tcp
             from_port: 80
@@ -51,4 +52,15 @@
             from_port: 22
             to_port: 22
             group_id: "{{bastion_SGout}}"
-            
+      register: ec2_stack_SGout
+      
+    - name: update security group for ec2-stack
+      ec2_group:
+        name: ec2_stack_sg
+        description: security group for ec2-stack
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        purge_rules: no
+        rules:
+          - proto: all
+            group_id: "{{ec2_stack_SGout.group_id}}"
