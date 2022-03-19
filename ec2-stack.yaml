@@ -84,7 +84,7 @@
           Name: "web01"
           Project: Vprofile
           Owner: dev_team
-        register: web01_out
+      register: web01_out
         
     - name: creating the tomcat instance
       ec2:
@@ -105,7 +105,7 @@
           Name: "app01"
           Project: Vprofile
           Owner: dev_team
-        register: app01_out
+      register: app01_out
 
     - name: creating the rabbitmq instance
       ec2:
@@ -126,7 +126,7 @@
           Name: "rmq01"
           Project: Vprofile
           Owner: dev_team
-        register: rmq01_out
+      register: rmq01_out
         
     - name: creating the memcache instance
       ec2:
@@ -147,7 +147,7 @@
           Name: "mc01"
           Project: Vprofile
           Owner: dev_team
-        register: mc01_out
+      register: mc01_out
 
     - name: creating the mysql instance
       ec2:
@@ -168,7 +168,7 @@
           Name: "db01"
           Project: Vprofile
           Owner: dev_team
-        register: db01_out
+      register: db01_out
         
     - debug:
         var: db01_out
