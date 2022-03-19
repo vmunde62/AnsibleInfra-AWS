@@ -58,4 +58,11 @@
           Owner: dev_team
       register: bastion_out
       
+    - name: insert bastion sg id in output vars
+      blockinfile:
+        path: vars/variable_out
+        backup: yes
+        block: |
+          bastion_SGout: "{{bastion_SG_out.group_id}}"
+      
 

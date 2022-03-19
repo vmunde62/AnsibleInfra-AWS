@@ -3,8 +3,10 @@
   connection: local
   gather_facts: False
   tasks:
-    - name: Importing the required variables
+    - name: including the required variables
       include_vars: vars/variable_out
+      
+    - name: including varibale for stack
       include_vars: vars/stack_setup
       
     - name: Create ec2 key
@@ -20,4 +22,33 @@
         mode: 0600
       when: ec2_stack_keyout.changed
       
+    - name: security group for load balencer
+      ec2_group:
+        name: load_balencer_sg
+        description: security group for load balencer
+        vpc_id: "{{vpcid}}"
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: lbSG_out
       
+    - name: security group for ec2-stack
+      ec2_group:
+        name: ec2_stack_sg
+        description: security group for ec2-stack
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{lbSG_out.group_id}}"
+            
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id: "{{bastion_SGout}}"
+            
