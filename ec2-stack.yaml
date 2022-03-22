@@ -195,11 +195,11 @@
       blockinfile:
         path: provision-stack/group-vars/hostip
         block: |
-          web01_ip: {{web01_out.taggeed_instances[0].private_ip}}
-          app01_ip: {{app01_out.taggeed_instances[0].private_ip}}
-          rmq01_ip: {{rmq01_out.taggeed_instances[0].private_ip}}
-          mc01_out: {{mc01_out.taggeed_instances[0].private_ip}}
-          db01_out: {{db01_out.taggeed_instances[0].private_ip}}       
+          web01_ip: {{web01_out.tagged_instances[0].private_ip}}
+          app01_ip: {{app01_out.tagged_instances[0].private_ip}}
+          rmq01_ip: {{rmq01_out.tagged_instances[0].private_ip}}
+          mc01_out: {{mc01_out.tagged_instances[0].private_ip}}
+          db01_out: {{db01_out.tagged_instances[0].private_ip}}       
 
     - name: Store the ec2 stack key in provision-stack dir
       copy:
@@ -211,11 +211,11 @@
       blockinfile:
         path: provision-stack/inventory-stack
         block: |
-          web01 ansible_host={{web01_out.taggeed_instances[0].private_ip}}
-          app01 ansible_host={{web01_out.taggeed_instances[0].private_ip}}
-          rmq01 ansible_host={{rmq01_out.taggeed_instances[0].private_ip}}
-          mc01 ansible_host={{mc01_out.taggeed_instances[0].private_ip}}
-          db01 ansible_host={{db01_out.taggeed_instances[0].private_ip}}
+          web01 ansible_host={{web01_out.tagged_instances[0].private_ip}}
+          app01 ansible_host={{web01_out.tagged_instances[0].private_ip}}
+          rmq01 ansible_host={{rmq01_out.tagged_instances[0].private_ip}}
+          mc01 ansible_host={{mc01_out.tagged_instances[0].private_ip}}
+          db01 ansible_host={{db01_out.tagged_instances[0].private_ip}}
           cntl ansible_host=127.0.0.1 ansible_connection=local
           
           [websrvgrp]
