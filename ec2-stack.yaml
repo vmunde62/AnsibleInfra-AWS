@@ -171,7 +171,82 @@
       register: db01_out
         
     - debug:
-        var: db01_out
-
+        var: db01_out.tagged_instances[0].id
         
+    - local_action:
+        module: ec2_elb_lb
+        name: ec2-stack-lb
+        region: "{{region}}"
+        state: present
+        instance_ids:
+          - "{{web01_out.tagged_instances[0].id}}"
+        purge_instance_ids: true
+        security_group_ids: "{{lbSG_out.group_id}}"
+        subnets:
+          - "{{pubsub1id}}"
+          - "{{pubsub2id}}"
+          - "{{pubsub3id}}"
+        listeners:
+          - protocol: http
+            load_balencer_port: 80
+            instance_port: 80
+            
+    - name: Store the instance ips in /provision-stack/group-vars/hostips
+      blockinfile:
+        path: provision-stack/group-vars/hostip
+        block: |
+          web01_ip: {{web01_out.taggeed_instances[0].private_ip}}
+          app01_ip: {{app01_out.taggeed_instances[0].private_ip}}
+          rmq01_ip: {{rmq01_out.taggeed_instances[0].private_ip}}
+          mc01_out: {{mc01_out.taggeed_instances[0].private_ip}}
+          db01_out: {{db01_out.taggeed_instances[0].private_ip}}       
 
+    - name: Store the ec2 stack key in provision-stack dir
+      copy:
+        src: ec2_stack_key.pem
+        dest: provision-stack/ec2_stack_key.pem
+        mode: '0400'
+    
+    - name: Insert/Update Inventory file in provision-stack dir
+      blockinfile:
+        path: provision-stack/inventory-stack
+        block: |
+          web01 ansible_host={{web01_out.taggeed_instances[0].private_ip}}
+          app01 ansible_host={{web01_out.taggeed_instances[0].private_ip}}
+          rmq01 ansible_host={{rmq01_out.taggeed_instances[0].private_ip}}
+          mc01 ansible_host={{mc01_out.taggeed_instances[0].private_ip}}
+          db01 ansible_host={{db01_out.taggeed_instances[0].private_ip}}
+          cntl ansible_host=127.0.0.1 ansible_connection=local
+          
+          [websrvgrp]
+          web01
+          
+          [appsrvgrp]
+          app01
+          
+          [rmqsrvgrp]
+          rmq01
+          
+          [mcsrvgrp]
+          mc01
+          
+          [dbsrvgrp]
+          db01
+          
+          [control]
+          cntl
+          
+          [stack_inst:children]
+          websrvgrp
+          appsrvgrp
+          rmqsrvgrp
+          mcsrvgrp
+          dbsrvgrp
+          control
+          
+          [stack_inst:vars]
+          ansible_user=ubuntu
+          ansible_ssh_private_key=provision-stack/ec2_stack_key.pem
+          #ansible_python_interpreter=/usr/bin/python3
+          
+          
