@@ -1,0 +1,42 @@
+---
+- host: localhost
+  connections: local
+  gather_facts: False
+  tasks:
+    - name: Install git, maven, jdk8
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - git
+        - maven
+        - openjdk-8-jdk
+      
+    - name: Clone source code from github
+      git:
+        repo: https://github.com/devopshydclub/vprofile-project.git
+        dest: ./ec2-stack-repo
+        version: vp-rem
+      register: git_status
+      
+    - name: mvn install command to build artifacts
+      command: "mvn install"
+      args:
+        chdir: ec2-stack-repo
+      when: git_status.changed
+      register: mvn_status
+      
+    - name: copy artifacts to files dir
+      copy:
+        src: "{{item}}"
+        dest: files/ROOT.war
+      with_fileglob:
+        - "ec2-stack-repo/target/*.war"
+    
+    - name: copy db_backup file to files
+      copy:
+        src: ec2-stack-repo/src/resources/db_backup.sql
+        dest: files/db_backup.sql
+        
+    
