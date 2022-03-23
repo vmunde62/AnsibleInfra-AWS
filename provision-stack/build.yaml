@@ -1,7 +1,8 @@
 ---
-- host: localhost
-  connections: local
-  gather_facts: False
+- name: Generate artifact, Build artifacts, copy sql files to files dir
+  hosts: localhost
+  connection: local
+  become: yes
   tasks:
     - name: Install git, maven, jdk8
       apt:
