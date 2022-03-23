@@ -37,7 +37,7 @@
     
     - name: copy db_backup file to files
       copy:
-        src: ec2-stack-repo/src/resources/db_backup.sql
+        src: ec2-stack-repo/src/main/resources/db_backup.sql
         dest: files/db_backup.sql
         
     
