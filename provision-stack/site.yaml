@@ -1,0 +1,5 @@
+---
+- name: Build artifact ROOT.war and SQL file to be copied in /files directory
+  import_playbook: build.yaml
+  
+  
