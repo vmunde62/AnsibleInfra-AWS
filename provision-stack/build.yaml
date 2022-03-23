@@ -25,7 +25,6 @@
       command: "mvn install"
       args:
         chdir: ec2-stack-repo
-      when: git_status.changed
       register: mvn_status
       
     - name: copy artifacts to files dir
