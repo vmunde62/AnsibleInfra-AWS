@@ -18,7 +18,7 @@
       git:
         repo: https://github.com/devopshydclub/vprofile-project.git
         dest: ./ec2-stack-repo
-        version: vp-rem
+        version: cd-aws
       register: git_status
       
     - name: mvn install command to build artifacts
