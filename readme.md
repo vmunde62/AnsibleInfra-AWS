@@ -1,3 +1,3 @@
-##This is the sample Ansible playbook to deploy Vpc on AWS##
+##This is the sample Ansible playbook to deploy java stack on AWS##
 
 Vishal@git62
